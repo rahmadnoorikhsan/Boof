@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Boof</string>
+    <string name="home">Home</string>
+    <string name="explore">Explore</string>
+    <string name="profile">Profile</string>
+    <string name="home_desc">Home Page</string>
+    <string name="explore_desc">Explore Page</string>
+    <string name="profile_desc">Profile Page</string>
+</resources>
