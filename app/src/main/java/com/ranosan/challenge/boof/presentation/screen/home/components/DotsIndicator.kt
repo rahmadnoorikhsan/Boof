@@ -24,7 +24,7 @@ fun DotsIndicator(
     dotSize: Dp,
     modifier: Modifier = Modifier,
     selectedColor: Color = MaterialTheme.colorScheme.primary,
-    unselectedColor: Color = MaterialTheme.colorScheme.onSurface
+    unselectedColor: Color = Color.Gray
 ) {
     LazyRow(
         modifier = modifier
