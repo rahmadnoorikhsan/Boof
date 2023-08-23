@@ -22,14 +22,14 @@ import com.ranosan.challenge.boof.presentation.screen.home.model.MovieItemUi
 import com.ranosan.challenge.boof.util.Constants.getImageUrl
 
 @Composable
-fun ListTopRated(
-    topRatedItem: List<MovieItemUi>,
+fun ListUpComing(
+    upComingItem: List<MovieItemUi>,
     navigateToDetail: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(modifier) {
         Text(
-            text = "Top Rated",
+            text = "Up Coming",
             style = MaterialTheme.typography.titleMedium.copy(
                 fontWeight = FontWeight.Bold
             ),
@@ -39,9 +39,9 @@ fun ListTopRated(
         LazyRow(
             contentPadding = PaddingValues(horizontal = 16.dp),
             horizontalArrangement = Arrangement.spacedBy(4.dp),
-            modifier = modifier.height(176.dp)
+            modifier = Modifier.height(176.dp)
         ) {
-            items(topRatedItem, key = { it.id }) { item ->
+            items(upComingItem, key = { it.id }) { item ->
                 AsyncImage(
                     model = getImageUrl(item.posterPath),
                     contentDescription = item.title,

@@ -1,4 +1,4 @@
-package com.ranosan.challenge.boof
+package com.ranosan.challenge.boof.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.ranosan.challenge.boof.presentation.BoofApp
+import androidx.core.view.WindowCompat
 import com.ranosan.challenge.boof.ui.theme.BoofTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,6 +15,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
             BoofTheme {

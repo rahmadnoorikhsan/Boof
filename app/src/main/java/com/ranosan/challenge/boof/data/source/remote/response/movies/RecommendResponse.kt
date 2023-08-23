@@ -2,7 +2,7 @@ package com.ranosan.challenge.boof.data.source.remote.response.movies
 
 import com.google.gson.annotations.SerializedName
 
-data class MoviesResponse(
+data class RecommendResponse(
 
 	@field:SerializedName("page")
 	val page: Int? = null,
@@ -11,13 +11,13 @@ data class MoviesResponse(
 	val totalPages: Int? = null,
 
 	@field:SerializedName("results")
-	val results: List<MovieResponseItem>,
+	val results: List<RecommendItem>,
 
 	@field:SerializedName("total_results")
 	val totalResults: Int? = null
 )
 
-data class MovieResponseItem(
+data class RecommendItem(
 
 	@field:SerializedName("overview")
 	val overview: String? = null,
@@ -42,6 +42,9 @@ data class MovieResponseItem(
 
 	@field:SerializedName("backdrop_path")
 	val backdropPath: String? = null,
+
+	@field:SerializedName("media_type")
+	val mediaType: String? = null,
 
 	@field:SerializedName("release_date")
 	val releaseDate: String? = null,

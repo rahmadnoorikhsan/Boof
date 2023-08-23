@@ -1,6 +1,9 @@
 package com.ranosan.challenge.boof.di
 
+import com.ranosan.challenge.boof.BuildConfig
 import com.ranosan.challenge.boof.data.source.remote.retrofit.ApiService
+import com.ranosan.challenge.boof.util.Constants.AUTHORIZATION
+import com.ranosan.challenge.boof.util.Constants.getBearer
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,7 +24,7 @@ object NetworkModule {
     fun getInterceptor(): Interceptor {
         return Interceptor {
             val request = it.request().newBuilder()
-            request.addHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZTBjMzYwZmY2ODVhYTU2MWIyNzUyMWVjMWU5ZmMxNyIsInN1YiI6IjY0YTgxOTA1NjVjMjZjMDEyZGZhMmI4YSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JZFOCHeD1Fhwk8HzKcudywg0RvnA6hkSe4e_N9b8kQk")
+            request.addHeader(AUTHORIZATION, getBearer())
             val actualRequest = request.build()
             it.proceed(actualRequest)
         }
@@ -44,7 +47,7 @@ object NetworkModule {
     @Singleton
     fun provideApiService(client: OkHttpClient): ApiService {
         return Retrofit.Builder()
-            .baseUrl("https://api.themoviedb.org/3/")
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
