@@ -18,8 +18,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.ranosan.challenge.boof.presentation.screen.home.model.MovieItemUi
-import com.ranosan.challenge.boof.util.Constants.getImageUrl
+import com.ranosan.challenge.boof.core.presentation.model.MovieItemUi
+import com.ranosan.challenge.boof.core.util.Constants.getImageUrl
 
 @Composable
 fun ListUpComing(

@@ -37,9 +37,9 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.AsyncImage
-import com.ranosan.challenge.boof.presentation.screen.home.model.MovieItemUi
-import com.ranosan.challenge.boof.ui.theme.md_theme_dark_background
-import com.ranosan.challenge.boof.util.Constants.getImageUrl
+import com.ranosan.challenge.boof.core.presentation.model.MovieItemUi
+import com.ranosan.challenge.boof.core.ui.theme.md_theme_dark_background
+import com.ranosan.challenge.boof.core.util.Constants.getImageUrl
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

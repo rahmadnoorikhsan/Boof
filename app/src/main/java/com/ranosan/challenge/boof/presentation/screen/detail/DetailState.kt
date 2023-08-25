@@ -1,7 +1,7 @@
 package com.ranosan.challenge.boof.presentation.screen.detail
 
-import com.ranosan.challenge.boof.presentation.screen.detail.model.DetailMovieUi
-import com.ranosan.challenge.boof.presentation.screen.home.model.MovieItemUi
+import com.ranosan.challenge.boof.core.presentation.model.DetailMovieUi
+import com.ranosan.challenge.boof.core.presentation.model.MovieItemUi
 
 data class DetailState(
     val listRecommend: List<MovieItemUi> = emptyList(),

@@ -8,7 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
-import com.ranosan.challenge.boof.ui.theme.BoofTheme
+import com.ranosan.challenge.boof.core.ui.theme.BoofTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

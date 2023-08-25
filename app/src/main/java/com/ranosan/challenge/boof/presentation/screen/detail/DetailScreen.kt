@@ -25,10 +25,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
+import com.ranosan.challenge.boof.core.presentation.model.DetailMovieUi
+import com.ranosan.challenge.boof.core.presentation.model.MovieItemUi
+import com.ranosan.challenge.boof.core.util.Constants.getImageUrl
 import com.ranosan.challenge.boof.presentation.screen.detail.components.ListRecommends
-import com.ranosan.challenge.boof.presentation.screen.detail.model.DetailMovieUi
-import com.ranosan.challenge.boof.presentation.screen.home.model.MovieItemUi
-import com.ranosan.challenge.boof.util.Constants.getImageUrl
 
 @Composable
 fun DetailScreen(

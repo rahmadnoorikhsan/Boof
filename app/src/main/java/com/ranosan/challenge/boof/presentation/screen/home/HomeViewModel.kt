@@ -3,10 +3,10 @@ package com.ranosan.challenge.boof.presentation.screen.home
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ranosan.challenge.boof.domain.model.MovieItem
-import com.ranosan.challenge.boof.domain.repository.MovieRepository
-import com.ranosan.challenge.boof.util.Result
-import com.ranosan.challenge.boof.util.toUi
+import com.ranosan.challenge.boof.core.domain.model.MovieItem
+import com.ranosan.challenge.boof.core.domain.repository.MovieRepository
+import com.ranosan.challenge.boof.core.util.Result
+import com.ranosan.challenge.boof.core.util.toUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

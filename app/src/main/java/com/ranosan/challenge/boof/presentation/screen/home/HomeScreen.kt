@@ -14,13 +14,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ranosan.challenge.boof.core.presentation.model.MovieItemUi
 import com.ranosan.challenge.boof.presentation.screen.home.components.AutoSlidePoster
 import com.ranosan.challenge.boof.presentation.screen.home.components.ListNowPlaying
 import com.ranosan.challenge.boof.presentation.screen.home.components.ListPopular
 import com.ranosan.challenge.boof.presentation.screen.home.components.ListTopRated
 import com.ranosan.challenge.boof.presentation.screen.home.components.ListTrending
 import com.ranosan.challenge.boof.presentation.screen.home.components.ListUpComing
-import com.ranosan.challenge.boof.presentation.screen.home.model.MovieItemUi
 
 @Composable
 fun HomeScreen(

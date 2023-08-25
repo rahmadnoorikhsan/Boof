@@ -1,6 +1,6 @@
 package com.ranosan.challenge.boof.presentation.screen.home
 
-import com.ranosan.challenge.boof.presentation.screen.home.model.MovieItemUi
+import com.ranosan.challenge.boof.core.presentation.model.MovieItemUi
 
 data class HomeState(
     val listPoster: List<MovieItemUi> = emptyList(),
