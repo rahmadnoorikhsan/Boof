@@ -1,4 +1,4 @@
-package com.ranosan.challenge.boof.presentation.screen.home.components
+package com.ranosan.challenge.boof.presentation.screen.detail.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -24,16 +24,18 @@ import com.ranosan.challenge.boof.core.presentation.model.MovieItemUi
 import com.ranosan.challenge.boof.core.util.Constants.getImageUrl
 
 @Composable
-fun ListPopular(
-    popularItem: List<MovieItemUi>,
+fun ListSimilar(
+    listSimilar: List<MovieItemUi>,
     navigateToDetail: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier) {
+    Column(
+        modifier = modifier
+    ) {
         Text(
-            text = stringResource(R.string.popular),
+            text = stringResource(R.string.similar),
             style = MaterialTheme.typography.titleMedium.copy(
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.SemiBold
             ),
             modifier = Modifier.padding(start = 16.dp)
         )
@@ -43,7 +45,7 @@ fun ListPopular(
             horizontalArrangement = Arrangement.spacedBy(4.dp),
             modifier = Modifier.height(176.dp)
         ) {
-            items(popularItem, key = { it.id }) { item ->
+            items(listSimilar, key = { it.id }) { item ->
                 AsyncImage(
                     model = getImageUrl(item.posterPath),
                     contentDescription = item.title,

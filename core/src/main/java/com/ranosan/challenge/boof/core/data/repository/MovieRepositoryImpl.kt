@@ -3,7 +3,7 @@ package com.ranosan.challenge.boof.core.data.repository
 import com.ranosan.challenge.boof.core.data.source.RemoteDataSource
 import com.ranosan.challenge.boof.core.data.source.remote.response.movies.LogosResponseItem
 import com.ranosan.challenge.boof.core.data.source.remote.response.movies.MovieResponseItem
-import com.ranosan.challenge.boof.core.data.source.remote.response.movies.RecommendItem
+import com.ranosan.challenge.boof.core.data.source.remote.response.movies.SimilarRecommendItem
 import com.ranosan.challenge.boof.core.domain.repository.MovieRepository
 import com.ranosan.challenge.boof.core.util.Result
 import com.ranosan.challenge.boof.core.util.toDomain
@@ -105,7 +105,17 @@ class MovieRepositoryImpl @Inject constructor(
     override fun getRecommend(id: Int) = flow {
         emit(Result.Loading())
         try {
-            val response = remoteDataSource.getRecommend(id).results.map(RecommendItem::toDomain)
+            val response = remoteDataSource.getRecommend(id).results.map(SimilarRecommendItem::toDomain)
+            emit(Result.Success(response))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message))
+        }
+    }.flowOn(Dispatchers.IO)
+
+    override fun getSimilar(id: Int) = flow {
+        emit(Result.Loading())
+        try {
+            val response = remoteDataSource.getSimilar(id).results.map(SimilarRecommendItem::toDomain)
             emit(Result.Success(response))
         } catch (e: Exception) {
             emit(Result.Error(e.message))

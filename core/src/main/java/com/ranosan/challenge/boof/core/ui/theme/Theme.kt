@@ -43,16 +43,6 @@ private val DarkColorScheme = darkColorScheme(
     surfaceTint = md_theme_dark_surfaceTint,
     outlineVariant = md_theme_dark_outlineVariant,
     scrim = md_theme_dark_scrim,
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
 )
 
 @Composable
@@ -75,8 +65,8 @@ fun BoofTheme(
         SideEffect {
             with(view.context as Activity) {
                 val window = (view.context as Activity).window
-
                 window.statusBarColor = ContextCompat.getColor(applicationContext, android.R.color.transparent)
+                window.navigationBarColor = ContextCompat.getColor(applicationContext, android.R.color.transparent)
             }
         }
     }

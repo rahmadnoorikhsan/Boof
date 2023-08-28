@@ -23,4 +23,6 @@ class RemoteDataSource @Inject constructor(
     suspend fun detailMovie(id: Int) = apiService.detailMovie(id)
 
     suspend fun getRecommend(id: Int) = apiService.recommendMovie(id)
+
+    suspend fun getSimilar(id: Int) = apiService.similarMovie(id)
 }

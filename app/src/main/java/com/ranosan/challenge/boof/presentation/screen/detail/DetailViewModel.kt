@@ -2,9 +2,12 @@ package com.ranosan.challenge.boof.presentation.screen.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ranosan.challenge.boof.core.domain.model.Favorite
 import com.ranosan.challenge.boof.core.domain.model.MovieItem
+import com.ranosan.challenge.boof.core.domain.repository.FavoriteRepository
 import com.ranosan.challenge.boof.core.domain.repository.MovieRepository
 import com.ranosan.challenge.boof.core.util.Result
+import com.ranosan.challenge.boof.core.util.toEntity
 import com.ranosan.challenge.boof.core.util.toUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
-    private val repository: MovieRepository
+    private val movieRepository: MovieRepository,
+    private val favoriteRepository: FavoriteRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(DetailState())
@@ -26,16 +30,40 @@ class DetailViewModel @Inject constructor(
             is DetailEvent.GetDetail -> {
                 getLogoMovie(event.id)
                 getDetailMovie(event.id)
+                checkIsFavorite(event.id)
             }
 
             is DetailEvent.GetRecommend -> {
                 getRecommend(event.id)
+                getSimilar(event.id)
+            }
+
+            is DetailEvent.OnFavClick -> {
+                if (event.detailMovie != null) {
+                    val detailMovie = event.detailMovie
+                    val favoriteItem = Favorite(
+                        id = detailMovie.id,
+                        title = detailMovie.title,
+                        overview = detailMovie.overview,
+                        originalLanguage = detailMovie.originalLanguage,
+                        originalTitle = detailMovie.originalTitle,
+                        video = detailMovie.video,
+                        posterPath = detailMovie.posterPath,
+                        backdropPath = detailMovie.backdropPath,
+                        releaseDate = detailMovie.releaseDate,
+                        popularity = detailMovie.popularity,
+                        voteAverage = detailMovie.voteAverage,
+                        adult = detailMovie.adult,
+                        voteCount = detailMovie.id
+                    )
+                    addOrRemoveFromFavorite(event.isFav, favoriteItem)
+                }
             }
         }
     }
 
     private fun getLogoMovie(id: Int) = viewModelScope.launch {
-        repository.logoMovie(id).collect { result ->
+        movieRepository.logoMovie(id).collect { result ->
             when(result) {
                 is Result.Error -> {
                     _state.update {
@@ -65,7 +93,7 @@ class DetailViewModel @Inject constructor(
     }
 
     private fun getDetailMovie(id: Int) = viewModelScope.launch {
-        repository.detailMovie(id).collect { result ->
+        movieRepository.detailMovie(id).collect { result ->
             when (result) {
                 is Result.Error -> {
                     _state.update {
@@ -97,7 +125,7 @@ class DetailViewModel @Inject constructor(
     }
 
     private fun getRecommend(id: Int) = viewModelScope.launch {
-        repository.getRecommend(id).collect { result ->
+        movieRepository.getRecommend(id).collect { result ->
             when (result) {
                 is Result.Error -> {
                     _state.update {
@@ -122,6 +150,54 @@ class DetailViewModel @Inject constructor(
                         )
                     }
                 }
+            }
+        }
+    }
+
+    private fun getSimilar(id: Int) = viewModelScope.launch {
+        movieRepository.getSimilar(id).collect { result ->
+            when (result) {
+                is Result.Error -> {
+                    _state.update {
+                        it.copy(
+                            isLoading = false,
+                            isError = result.message
+                        )
+                    }
+                }
+                is Result.Loading -> {
+                    _state.update {
+                        it.copy(
+                            isLoading = true
+                        )
+                    }
+                }
+                is Result.Success -> {
+                    _state.update {
+                        it.copy(
+                            isLoading = false,
+                            listSimilar = result.data.map(MovieItem::toUi)
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun addOrRemoveFromFavorite(isFav: Boolean, favoriteItem: Favorite) = viewModelScope.launch {
+        if (isFav) {
+            favoriteRepository.insertFavorite(favoriteItem.toEntity())
+        } else {
+            favoriteRepository.deleteFavorite(favoriteItem.toEntity().id)
+        }
+    }
+
+    private fun checkIsFavorite(id: Int) = viewModelScope.launch {
+        favoriteRepository.isFavorite(id).collect { isFav ->
+            _state.update {
+                it.copy(
+                    isFav = isFav
+                )
             }
         }
     }

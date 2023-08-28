@@ -15,9 +15,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.ranosan.challenge.boof.R
 import com.ranosan.challenge.boof.core.presentation.model.MovieItemUi
 import com.ranosan.challenge.boof.core.util.Constants.getImageUrl
 
@@ -31,7 +33,7 @@ fun ListRecommends(
         modifier = modifier
     ) {
         Text(
-            text = "Recommendation",
+            text = stringResource(R.string.recommendation),
             style = MaterialTheme.typography.titleMedium.copy(
                 fontWeight = FontWeight.SemiBold
             ),

@@ -3,7 +3,7 @@ package com.ranosan.challenge.boof.core.data.source.remote.retrofit
 import com.ranosan.challenge.boof.core.data.source.remote.response.movies.DetailResponse
 import com.ranosan.challenge.boof.core.data.source.remote.response.movies.ImageResponse
 import com.ranosan.challenge.boof.core.data.source.remote.response.movies.MoviesResponse
-import com.ranosan.challenge.boof.core.data.source.remote.response.movies.RecommendResponse
+import com.ranosan.challenge.boof.core.data.source.remote.response.movies.SimilarRecomendResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -39,5 +39,10 @@ interface ApiService {
     @GET("movie/{movie_id}/recommendations")
     suspend fun recommendMovie(
         @Path("movie_id") id: Int
-    ) : RecommendResponse
+    ) : SimilarRecomendResponse
+
+    @GET("movie/{movie_id}/similar")
+    suspend fun similarMovie(
+        @Path("movie_id") id: Int
+    ) : SimilarRecomendResponse
 }

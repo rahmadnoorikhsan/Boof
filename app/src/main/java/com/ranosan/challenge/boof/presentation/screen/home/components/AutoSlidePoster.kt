@@ -2,6 +2,7 @@ package com.ranosan.challenge.boof.presentation.screen.home.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,11 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawWithCache
-import androidx.compose.ui.graphics.BlendMode
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontSynthesis
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -38,7 +35,6 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.AsyncImage
 import com.ranosan.challenge.boof.core.presentation.model.MovieItemUi
-import com.ranosan.challenge.boof.core.ui.theme.md_theme_dark_background
 import com.ranosan.challenge.boof.core.util.Constants.getImageUrl
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -47,6 +43,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun AutoSlidePoster(
     poster: List<MovieItemUi>,
+    navigateToDetail: (Int) -> Unit,
     modifier: Modifier = Modifier,
     delay: Long = 5000L,
     pagerState: PagerState = rememberPagerState(
@@ -85,27 +82,10 @@ fun AutoSlidePoster(
         ) {
             items(count = poster.size) { index ->
                 if (index == pagerState.currentPage) {
-                    AsyncImage(
-                        model = getImageUrl(poster[index].backdropPath),
-                        contentDescription = "${poster[index].title}",
-                        contentScale = ContentScale.Crop,
-                        alignment = Alignment.Center,
-                        modifier = Modifier
-                            .fillParentMaxWidth()
-                            .drawWithCache {
-                                val gradient = Brush.verticalGradient(
-                                    colors = listOf(
-                                        Color.Transparent,
-                                        md_theme_dark_background
-                                    ),
-                                    startY = size.height / 3,
-                                    endY = size.height
-                                )
-                                onDrawWithContent {
-                                    drawContent()
-                                    drawRect(gradient, blendMode = BlendMode.Multiply)
-                                }
-                            }
+                    PosterGradation(
+                        backdropPath = "${poster[index].backdropPath}",
+                        title = "${poster[index].title}",
+                        modifier = Modifier.fillParentMaxSize()
                     )
                 }
             }
@@ -124,10 +104,13 @@ fun AutoSlidePoster(
             Box(
                 contentAlignment = Alignment.BottomEnd,
                 modifier = Modifier
-                    .fillMaxWidth(0.9f)
+                    .fillMaxWidth()
                     .requiredHeight(280.dp)
                     .padding(bottom = 16.dp)
                     .background(Color.Transparent)
+                    .clickable {
+                        navigateToDetail(poster[index].id)
+                    }
             ) {
                 if (poster[index].logo != null) {
                     AsyncImage(
@@ -135,7 +118,8 @@ fun AutoSlidePoster(
                         contentDescription = "${poster[index].title}",
                         alignment = Alignment.Center,
                         modifier = Modifier
-                            .fillMaxWidth(0.9f)
+                            .padding(horizontal = 24.dp)
+                            .fillMaxWidth()
                             .size(72.dp)
                     )
                 } else {
@@ -161,7 +145,7 @@ fun AutoSlidePoster(
             totalDots = poster.size,
             selectedIndex = pagerState.currentPage,
             modifier = Modifier
-                .padding(horizontal = 8.dp, vertical = 16.dp)
+                .padding(horizontal = 8.dp, vertical = 8.dp)
                 .constrainAs(dotsIndicator) {
                     top.linkTo(logoCons.bottom)
                     start.linkTo(parent.start)

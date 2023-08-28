@@ -2,22 +2,22 @@ package com.ranosan.challenge.boof.core.data.source.remote.response.movies
 
 import com.google.gson.annotations.SerializedName
 
-data class RecommendResponse(
+data class SimilarRecomendResponse(
 
-    @field:SerializedName("page")
+	@field:SerializedName("page")
 	val page: Int? = null,
 
-    @field:SerializedName("total_pages")
+	@field:SerializedName("total_pages")
 	val totalPages: Int? = null,
 
-    @field:SerializedName("results")
-	val results: List<RecommendItem>,
+	@field:SerializedName("results")
+	val results: List<SimilarRecommendItem>,
 
-    @field:SerializedName("total_results")
+	@field:SerializedName("total_results")
 	val totalResults: Int? = null
 )
 
-data class RecommendItem(
+data class SimilarRecommendItem(
 
 	@field:SerializedName("overview")
 	val overview: String? = null,

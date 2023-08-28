@@ -23,4 +23,6 @@ interface MovieRepository {
     fun detailMovie(id: Int): Flow<Result<DetailMovie>>
 
     fun getRecommend(id: Int): Flow<Result<List<MovieItem>>>
+
+    fun getSimilar(id: Int): Flow<Result<List<MovieItem>>>
 }

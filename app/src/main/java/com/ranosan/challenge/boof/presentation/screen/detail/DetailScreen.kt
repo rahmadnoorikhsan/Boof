@@ -1,5 +1,6 @@
 package com.ranosan.challenge.boof.presentation.screen.detail
 
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -7,6 +8,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,11 +36,14 @@ import coil.compose.AsyncImage
 import com.ranosan.challenge.boof.core.presentation.model.DetailMovieUi
 import com.ranosan.challenge.boof.core.presentation.model.MovieItemUi
 import com.ranosan.challenge.boof.core.util.Constants.getImageUrl
+import com.ranosan.challenge.boof.presentation.screen.detail.components.ListGenre
 import com.ranosan.challenge.boof.presentation.screen.detail.components.ListRecommends
+import com.ranosan.challenge.boof.presentation.screen.detail.components.ListSimilar
 
 @Composable
 fun DetailScreen(
     id: Int,
+    navigateToDetail: (Int) -> Unit,
     viewModel: DetailViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -45,7 +56,19 @@ fun DetailScreen(
     DetailContent(
         logoMovies = state.logoMovie,
         detailMovie = state.detailMovie,
-        listRecommend = state.listRecommend
+        listRecommend = state.listRecommend,
+        listSimilar = state.listSimilar,
+        navigateToDetail = navigateToDetail,
+        isFav = state.isFav,
+        onFavClick = {
+            viewModel.onEvent(
+                DetailEvent.OnFavClick(
+                    !state.isFav,
+                    id,
+                    state.detailMovie
+                )
+            )
+        }
     )
 }
 
@@ -53,12 +76,18 @@ fun DetailScreen(
 fun DetailContent(
     logoMovies: String?,
     detailMovie: DetailMovieUi?,
+    isFav: Boolean,
     modifier: Modifier = Modifier,
     listRecommend: List<MovieItemUi>,
+    listSimilar: List<MovieItemUi>,
+    navigateToDetail: (Int) -> Unit,
+    onFavClick: () -> Unit,
+    scrollState: ScrollState = rememberScrollState()
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
+            .verticalScroll(scrollState)
             .fillMaxSize()
     ) {
         AsyncImage(
@@ -92,9 +121,29 @@ fun DetailContent(
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
-        detailMovie?.overview?.let {
+        detailMovie?.genres?.take(3).let { listGenre ->
+            if (listGenre != null) {
+                ListGenre(
+                    listGenre = listGenre,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+            }
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        IconButton(
+            onClick = onFavClick
+        ) {
+            Icon(
+                imageVector = if (isFav) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                tint = if (isFav) MaterialTheme.colorScheme.primary else Color.White,
+                contentDescription = null
+            )
+        }
+        Spacer(modifier = Modifier.height(24.dp))
+        detailMovie?.overview?.let { overview ->
             Text(
-                text = it,
+                text = overview,
                 style = MaterialTheme.typography.bodyMedium.copy(
                     textAlign = TextAlign.Justify
                 ),
@@ -107,9 +156,18 @@ fun DetailContent(
         if (listRecommend.isNotEmpty()) {
             ListRecommends(
                 listRecommend = listRecommend,
-                navigateToDetail = {},
+                navigateToDetail = navigateToDetail,
                 modifier = Modifier.fillMaxWidth()
             )
         }
+        Spacer(modifier = Modifier.height(24.dp))
+        if (listSimilar.isNotEmpty()) {
+            ListSimilar(
+                listSimilar = listSimilar,
+                navigateToDetail = navigateToDetail,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+        Spacer(modifier = Modifier.height(32.dp))
     }
 }

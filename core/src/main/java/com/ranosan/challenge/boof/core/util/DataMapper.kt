@@ -1,10 +1,12 @@
 package com.ranosan.challenge.boof.core.util
 
+import com.ranosan.challenge.boof.core.data.source.local.entity.FavoriteEntity
 import com.ranosan.challenge.boof.core.data.source.remote.response.movies.DetailResponse
 import com.ranosan.challenge.boof.core.data.source.remote.response.movies.LogosResponseItem
 import com.ranosan.challenge.boof.core.data.source.remote.response.movies.MovieResponseItem
-import com.ranosan.challenge.boof.core.data.source.remote.response.movies.RecommendItem
+import com.ranosan.challenge.boof.core.data.source.remote.response.movies.SimilarRecommendItem
 import com.ranosan.challenge.boof.core.domain.model.DetailMovie
+import com.ranosan.challenge.boof.core.domain.model.Favorite
 import com.ranosan.challenge.boof.core.domain.model.LogoItem
 import com.ranosan.challenge.boof.core.domain.model.MovieItem
 import com.ranosan.challenge.boof.core.presentation.model.DetailMovieUi
@@ -97,7 +99,7 @@ fun DetailMovie.toUi() = DetailMovieUi(
     tagline = tagline
 )
 
-fun RecommendItem.toDomain() = MovieItem(
+fun SimilarRecommendItem.toDomain() = MovieItem(
     overview = overview,
     originalLanguage = originalLanguage,
     originalTitle = originalTitle,
@@ -112,4 +114,40 @@ fun RecommendItem.toDomain() = MovieItem(
     voteCount = voteCount,
     voteAverage = voteAverage,
     id = id
+)
+
+fun FavoriteEntity.toDomain(): Favorite = Favorite(
+    id = id,
+    title = title,
+    overview = overview,
+    originalLanguage = originalLanguage,
+    originalTitle = originalTitle,
+    video = video,
+    posterPath = posterPath,
+    backdropPath = backdropPath,
+    releaseDate = releaseDate,
+    popularity = popularity,
+    voteAverage = voteAverage,
+    adult = adult,
+    voteCount = voteCount,
+    logo = logo
+)
+
+fun List<FavoriteEntity>.toDomain(): List<Favorite> = map(FavoriteEntity::toDomain)
+
+fun Favorite.toEntity(): FavoriteEntity = FavoriteEntity(
+    id = id,
+    title = title,
+    overview = overview,
+    originalLanguage = originalLanguage,
+    originalTitle = originalTitle,
+    video = video,
+    posterPath = posterPath,
+    backdropPath = backdropPath,
+    releaseDate = releaseDate,
+    popularity = popularity,
+    voteAverage = voteAverage,
+    adult = adult,
+    voteCount = voteCount,
+    logo = logo
 )

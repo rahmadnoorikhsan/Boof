@@ -2,8 +2,13 @@
     <string name="app_name">Boof</string>
     <string name="home">Home</string>
     <string name="explore">Explore</string>
-    <string name="profile">Profile</string>
+    <string name="favorite">Favorite</string>
     <string name="home_desc">Home Page</string>
     <string name="explore_desc">Explore Page</string>
-    <string name="profile_desc">Profile Page</string>
+    <string name="favorite_desc">Favorite Page</string>
+    <string name="bullet_symbol">"• "</string>
+    <string name="bullet_symbol_with_text">%1$s •</string>
+    <string name="recommendation">Recommendation</string>
+    <string name="similar">Similar</string>
+    <string name="popular">Popular</string>
 </resources>

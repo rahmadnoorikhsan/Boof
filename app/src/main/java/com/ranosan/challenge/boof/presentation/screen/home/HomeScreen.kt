@@ -60,6 +60,7 @@ fun HomeContent(
     ) {
         AutoSlidePoster(
             poster = poster,
+            navigateToDetail = navigateToDetail
         )
         Spacer(modifier = Modifier.height(16.dp))
         ListTrending(
